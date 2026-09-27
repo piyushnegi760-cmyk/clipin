@@ -1,0 +1,1569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+
+  <title>Clipin Dashboard</title>
+
+  <meta
+    name="description"
+    content="Clipin video repurposing dashboard."
+  />
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg: #07070a;
+      --panel: #101116;
+      --panel2: #15161d;
+      --border: rgba(255,255,255,.09);
+      --text: #ffffff;
+      --muted: #9699a6;
+      --green: #b8ff3d;
+      --green-dark: #8fd51d;
+      --danger: #ff5c5c;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family:
+        Inter,
+        ui-sans-serif,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    button,
+    input,
+    select {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* =========================
+       LAYOUT
+    ========================== */
+
+    .app {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      width: 250px;
+      min-height: 100vh;
+      background: #0b0c10;
+      border-right: 1px solid var(--border);
+      padding: 22px 16px;
+
+      position: fixed;
+      left: 0;
+      top: 0;
+      bottom: 0;
+
+      z-index: 20;
+    }
+
+    .main {
+      margin-left: 250px;
+      width: calc(100% - 250px);
+      min-height: 100vh;
+    }
+
+    /* =========================
+       LOGO
+    ========================== */
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 6px 10px 28px;
+    }
+
+    .logo-mark {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      background: var(--green);
+      color: #080909;
+
+      font-weight: 900;
+      font-size: 18px;
+    }
+
+    .logo-text {
+      font-size: 21px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+    }
+
+    /* =========================
+       NAV
+    ========================== */
+
+    .nav {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .nav-button {
+      width: 100%;
+      border: 0;
+      background: transparent;
+
+      color: var(--muted);
+
+      padding: 12px 13px;
+      border-radius: 11px;
+
+      text-align: left;
+
+      display: flex;
+      align-items: center;
+      gap: 11px;
+
+      transition: .2s;
+    }
+
+    .nav-button:hover {
+      background: rgba(255,255,255,.05);
+      color: white;
+    }
+
+    .nav-button.active {
+      background: rgba(184,255,61,.1);
+      color: var(--green);
+    }
+
+    .nav-icon {
+      width: 20px;
+      text-align: center;
+    }
+
+    /* =========================
+       SIDEBAR BOTTOM
+    ========================== */
+
+    .sidebar-bottom {
+      position: absolute;
+      left: 16px;
+      right: 16px;
+      bottom: 20px;
+    }
+
+    .credits-box {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 15px;
+      padding: 15px;
+      margin-bottom: 12px;
+    }
+
+    .credits-title {
+      color: var(--muted);
+      font-size: 12px;
+      margin-bottom: 7px;
+    }
+
+    .credits-value {
+      font-size: 22px;
+      font-weight: 800;
+    }
+
+    .credits-bar {
+      height: 5px;
+      background: #25262c;
+      border-radius: 20px;
+      overflow: hidden;
+      margin-top: 10px;
+    }
+
+    .credits-progress {
+      height: 100%;
+      width: 40%;
+      background: var(--green);
+      border-radius: 20px;
+    }
+
+    .logout {
+      width: 100%;
+      padding: 11px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--muted);
+      border-radius: 10px;
+    }
+
+    .logout:hover {
+      color: white;
+      border-color: rgba(255,255,255,.2);
+    }
+
+    /* =========================
+       TOPBAR
+    ========================== */
+
+    .topbar {
+      height: 74px;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      padding: 0 30px;
+
+      border-bottom: 1px solid var(--border);
+
+      background: rgba(7,7,10,.8);
+      backdrop-filter: blur(14px);
+
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .page-title {
+      font-size: 19px;
+      font-weight: 700;
+    }
+
+    .profile {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .avatar {
+      width: 38px;
+      height: 38px;
+
+      border-radius: 50%;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      background: var(--green);
+      color: #090a08;
+
+      font-weight: 800;
+    }
+
+    .profile-name {
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .profile-email {
+      color: var(--muted);
+      font-size: 11px;
+      margin-top: 2px;
+    }
+
+    /* =========================
+       CONTENT
+    ========================== */
+
+    .content {
+      padding: 35px;
+      max-width: 1400px;
+      margin: auto;
+    }
+
+    .welcome {
+      margin-bottom: 30px;
+    }
+
+    .welcome h1 {
+      font-size: clamp(27px, 4vw, 40px);
+      letter-spacing: -1.2px;
+      margin-bottom: 7px;
+    }
+
+    .welcome p {
+      color: var(--muted);
+    }
+
+    /* =========================
+       STAT CARDS
+    ========================== */
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+      margin-bottom: 25px;
+    }
+
+    .stat-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 17px;
+      padding: 20px;
+    }
+
+    .stat-label {
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 8px;
+    }
+
+    .stat-value {
+      font-size: 27px;
+      font-weight: 800;
+    }
+
+    .stat-small {
+      color: var(--green);
+      font-size: 12px;
+      margin-top: 7px;
+    }
+
+    /* =========================
+       CREATE PROJECT
+    ========================== */
+
+    .create-card {
+      background:
+        radial-gradient(
+          circle at top right,
+          rgba(184,255,61,.1),
+          transparent 35%
+        ),
+        var(--panel);
+
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 25px;
+
+      margin-bottom: 25px;
+    }
+
+    .card-heading {
+      margin-bottom: 20px;
+    }
+
+    .card-heading h2 {
+      font-size: 20px;
+      margin-bottom: 5px;
+    }
+
+    .card-heading p {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .input-label {
+      display: block;
+      color: #d7d8df;
+      font-size: 13px;
+      margin-bottom: 8px;
+    }
+
+    .url-row {
+      display: flex;
+      gap: 10px;
+    }
+
+    .url-input {
+      flex: 1;
+
+      min-width: 0;
+
+      background: #08090c;
+      border: 1px solid var(--border);
+
+      color: white;
+
+      padding: 14px 15px;
+      border-radius: 11px;
+
+      outline: none;
+    }
+
+    .url-input:focus {
+      border-color: rgba(184,255,61,.6);
+    }
+
+    .process-btn {
+      border: 0;
+      background: var(--green);
+      color: #080a07;
+
+      padding: 0 22px;
+
+      border-radius: 11px;
+
+      font-weight: 800;
+
+      transition: .2s;
+    }
+
+    .process-btn:hover {
+      background: #c8ff66;
+      transform: translateY(-1px);
+    }
+
+    /* =========================
+       OPTIONS
+    ========================== */
+
+    .options {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+
+      margin-top: 18px;
+    }
+
+    .option-group label {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      margin-bottom: 7px;
+    }
+
+    .select {
+      width: 100%;
+
+      background: #08090c;
+      color: white;
+
+      border: 1px solid var(--border);
+
+      border-radius: 10px;
+      padding: 11px;
+
+      outline: none;
+    }
+
+    /* =========================
+       MESSAGE
+    ========================== */
+
+    .message {
+      margin-top: 15px;
+      padding: 12px 14px;
+
+      border-radius: 10px;
+
+      background: rgba(184,255,61,.08);
+      border: 1px solid rgba(184,255,61,.15);
+
+      color: #dfffa9;
+
+      font-size: 13px;
+
+      display: none;
+    }
+
+    .message.show {
+      display: block;
+    }
+
+    .message.error {
+      background: rgba(255,92,92,.08);
+      border-color: rgba(255,92,92,.2);
+      color: #ffaaaa;
+    }
+
+    /* =========================
+       PROJECTS
+    ========================== */
+
+    .projects-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      overflow: hidden;
+    }
+
+    .projects-header {
+      padding: 20px;
+      border-bottom: 1px solid var(--border);
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .projects-header h2 {
+      font-size: 18px;
+    }
+
+    .projects-header span {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .project-list {
+      min-height: 160px;
+    }
+
+    .empty-state {
+      padding: 45px 20px;
+      text-align: center;
+      color: var(--muted);
+    }
+
+    .empty-icon {
+      width: 48px;
+      height: 48px;
+
+      margin: auto;
+      margin-bottom: 12px;
+
+      border-radius: 14px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      background: rgba(255,255,255,.05);
+
+      font-size: 20px;
+    }
+
+    .empty-state strong {
+      display: block;
+      color: white;
+      margin-bottom: 5px;
+    }
+
+    /* =========================
+       PROJECT ITEM
+    ========================== */
+
+    .project-item {
+      padding: 17px 20px;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      border-bottom: 1px solid var(--border);
+    }
+
+    .project-item:last-child {
+      border-bottom: 0;
+    }
+
+    .project-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+
+      min-width: 0;
+    }
+
+    .project-thumbnail {
+      width: 62px;
+      height: 42px;
+
+      border-radius: 8px;
+
+      background:
+        linear-gradient(
+          135deg,
+          #222,
+          #111
+        );
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      flex-shrink: 0;
+    }
+
+    .project-info {
+      min-width: 0;
+    }
+
+    .project-name {
+      font-size: 14px;
+      font-weight: 650;
+
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+
+      max-width: 400px;
+    }
+
+    .project-meta {
+      color: var(--muted);
+      font-size: 11px;
+      margin-top: 4px;
+    }
+
+    .status {
+      padding: 6px 9px;
+      border-radius: 20px;
+
+      background: rgba(184,255,61,.08);
+      color: var(--green);
+
+      font-size: 11px;
+    }
+
+    /* =========================
+       MOBILE
+    ========================== */
+
+    @media (max-width: 850px) {
+
+      .sidebar {
+        width: 70px;
+        padding: 15px 9px;
+      }
+
+      .main {
+        margin-left: 70px;
+        width: calc(100% - 70px);
+      }
+
+      .logo {
+        justify-content: center;
+        padding-bottom: 25px;
+      }
+
+      .logo-text {
+        display: none;
+      }
+
+      .nav-button {
+        justify-content: center;
+        padding: 12px 8px;
+      }
+
+      .nav-label {
+        display: none;
+      }
+
+      .sidebar-bottom {
+        left: 8px;
+        right: 8px;
+      }
+
+      .credits-box {
+        display: none;
+      }
+
+      .logout {
+        font-size: 0;
+      }
+
+      .logout::before {
+        content: "↪";
+        font-size: 18px;
+      }
+
+      .stats {
+        grid-template-columns: 1fr;
+      }
+
+      .options {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 600px) {
+
+      .topbar {
+        padding: 0 16px;
+      }
+
+      .profile-name,
+      .profile-email {
+        display: none;
+      }
+
+      .content {
+        padding: 22px 15px;
+      }
+
+      .create-card {
+        padding: 17px;
+      }
+
+      .url-row {
+        flex-direction: column;
+      }
+
+      .process-btn {
+        height: 47px;
+      }
+
+      .project-item {
+        gap: 10px;
+      }
+
+      .project-name {
+        max-width: 170px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="app">
+
+    <!-- =========================
+         SIDEBAR
+    ========================== -->
+
+    <aside class="sidebar">
+
+      <div class="logo">
+        <div class="logo-mark">C</div>
+        <div class="logo-text">Clipin</div>
+      </div>
+
+      <nav class="nav">
+
+        <button
+          class="nav-button active"
+          onclick="showSection('dashboard')"
+        >
+          <span class="nav-icon">⌂</span>
+          <span class="nav-label">Dashboard</span>
+        </button>
+
+        <button
+          class="nav-button"
+          onclick="showSection('create')"
+        >
+          <span class="nav-icon">＋</span>
+          <span class="nav-label">New Project</span>
+        </button>
+
+        <button
+          class="nav-button"
+          onclick="showSection('projects')"
+        >
+          <span class="nav-icon">▣</span>
+          <span class="nav-label">Projects</span>
+        </button>
+
+        <button
+          class="nav-button"
+          onclick="showSection('settings')"
+        >
+          <span class="nav-icon">⚙</span>
+          <span class="nav-label">Settings</span>
+        </button>
+
+      </nav>
+
+      <div class="sidebar-bottom">
+
+        <div class="credits-box">
+
+          <div class="credits-title">
+            Monthly credits
+          </div>
+
+          <div class="credits-value">
+            <span id="credits">10</span>
+          </div>
+
+          <div class="credits-bar">
+            <div class="credits-progress"></div>
+          </div>
+
+        </div>
+
+        <button
+          class="logout"
+          onclick="logout()"
+        >
+          Logout
+        </button>
+
+      </div>
+
+    </aside>
+
+
+    <!-- =========================
+         MAIN
+    ========================== -->
+
+    <main class="main">
+
+      <header class="topbar">
+
+        <div class="page-title">
+          Dashboard
+        </div>
+
+        <div class="profile">
+
+          <div class="avatar" id="avatar">
+            C
+          </div>
+
+          <div>
+
+            <div
+              class="profile-name"
+              id="profileName"
+            >
+              Clipin Creator
+            </div>
+
+            <div
+              class="profile-email"
+              id="profileEmail"
+            >
+              Demo account
+            </div>
+
+          </div>
+
+        </div>
+
+      </header>
+
+
+      <div class="content">
+
+
+        <!-- =========================
+             DASHBOARD
+        ========================== -->
+
+        <section id="dashboard">
+
+          <div class="welcome">
+
+            <h1>
+              Create your next clip.
+            </h1>
+
+            <p>
+              Turn your authorized long-form videos into short-form content.
+            </p>
+
+          </div>
+
+
+          <div class="stats">
+
+            <div class="stat-card">
+
+              <div class="stat-label">
+                Projects
+              </div>
+
+              <div
+                class="stat-value"
+                id="projectCount"
+              >
+                0
+              </div>
+
+              <div class="stat-small">
+                Total projects
+              </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+              <div class="stat-label">
+                Credits remaining
+              </div>
+
+              <div
+                class="stat-value"
+                id="creditStat"
+              >
+                10
+              </div>
+
+              <div class="stat-small">
+                Available
+              </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+              <div class="stat-label">
+                Current plan
+              </div>
+
+              <div class="stat-value">
+                Free
+              </div>
+
+              <div class="stat-small">
+                Upgrade available
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <!-- CREATE -->
+
+          <div
+            class="create-card"
+            id="create"
+          >
+
+            <div class="card-heading">
+
+              <h2>
+                Create a new project
+              </h2>
+
+              <p>
+                Add a video you own or have permission to process.
+              </p>
+
+            </div>
+
+
+            <label
+              class="input-label"
+              for="videoUrl"
+            >
+              Video URL
+            </label>
+
+
+            <div class="url-row">
+
+              <input
+                id="videoUrl"
+                class="url-input"
+                type="url"
+                placeholder="https://example.com/your-video"
+                autocomplete="off"
+              />
+
+              <button
+                class="process-btn"
+                onclick="createProject()"
+              >
+                Process Video
+              </button>
+
+            </div>
+
+
+            <div class="options">
+
+              <div class="option-group">
+
+                <label for="format">
+                  Format
+                </label>
+
+                <select
+                  id="format"
+                  class="select"
+                >
+                  <option value="9:16">
+                    9:16 — Shorts / Reels
+                  </option>
+
+                  <option value="1:1">
+                    1:1 — Square
+                  </option>
+
+                  <option value="16:9">
+                    16:9 — YouTube
+                  </option>
+                </select>
+
+              </div>
+
+
+              <div class="option-group">
+
+                <label for="quality">
+                  Quality
+                </label>
+
+                <select
+                  id="quality"
+                  class="select"
+                >
+                  <option value="720p">
+                    720p
+                  </option>
+
+                  <option value="1080p" selected>
+                    1080p
+                  </option>
+                </select>
+
+              </div>
+
+
+              <div class="option-group">
+
+                <label for="captions">
+                  Captions
+                </label>
+
+                <select
+                  id="captions"
+                  class="select"
+                >
+                  <option value="on">
+                    Auto captions — ON
+                  </option>
+
+                  <option value="off">
+                    Captions — OFF
+                  </option>
+                </select>
+
+              </div>
+
+            </div>
+
+
+            <div
+              id="message"
+              class="message"
+            ></div>
+
+          </div>
+
+
+          <!-- PROJECTS -->
+
+          <div
+            class="projects-card"
+            id="projects"
+          >
+
+            <div class="projects-header">
+
+              <h2>
+                Recent projects
+              </h2>
+
+              <span>
+                Your activity
+              </span>
+
+            </div>
+
+
+            <div
+              id="projectList"
+              class="project-list"
+            >
+
+              <div class="empty-state">
+
+                <div class="empty-icon">
+                  ▶
+                </div>
+
+                <strong>
+                  No projects yet
+                </strong>
+
+                Create your first project above.
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </section>
+
+
+        <!-- =========================
+             SETTINGS
+        ========================== -->
+
+        <section
+          id="settings"
+          style="
+            display:none;
+            margin-top:25px;
+          "
+        >
+
+          <div class="create-card">
+
+            <div class="card-heading">
+
+              <h2>
+                Account settings
+              </h2>
+
+              <p>
+                Your Clipin account information.
+              </p>
+
+            </div>
+
+            <p
+              style="
+                color:#9699a6;
+                font-size:14px;
+                line-height:1.7;
+              "
+            >
+              Authentication and account data will be connected
+              to Supabase in the next setup step.
+            </p>
+
+          </div>
+
+        </section>
+
+      </div>
+
+    </main>
+
+  </div>
+
+
+  <script>
+
+    /* =========================================
+       DEMO DATA
+    ========================================== */
+
+    let projects =
+      JSON.parse(
+        localStorage.getItem("clipin_projects") || "[]"
+      );
+
+    let credits =
+      Number(
+        localStorage.getItem("clipin_credits") || "10"
+      );
+
+
+    /* =========================================
+       INITIALIZE
+    ========================================== */
+
+    document.addEventListener(
+      "DOMContentLoaded",
+      function () {
+
+        updateDashboard();
+
+        renderProjects();
+
+      }
+    );
+
+
+    /* =========================================
+       DASHBOARD UPDATE
+    ========================================== */
+
+    function updateDashboard() {
+
+      document.getElementById(
+        "credits"
+      ).textContent = credits;
+
+      document.getElementById(
+        "creditStat"
+      ).textContent = credits;
+
+      document.getElementById(
+        "projectCount"
+      ).textContent = projects.length;
+
+    }
+
+
+    /* =========================================
+       CREATE PROJECT
+    ========================================== */
+
+    function createProject() {
+
+      const input =
+        document.getElementById("videoUrl");
+
+      const message =
+        document.getElementById("message");
+
+      const format =
+        document.getElementById("format").value;
+
+      const quality =
+        document.getElementById("quality").value;
+
+      const captions =
+        document.getElementById("captions").value;
+
+      const url =
+        input.value.trim();
+
+
+      message.className = "message";
+
+
+      if (!url) {
+
+        showMessage(
+          "Please enter a video URL.",
+          true
+        );
+
+        return;
+
+      }
+
+
+      try {
+
+        new URL(url);
+
+      } catch {
+
+        showMessage(
+          "Please enter a valid video URL.",
+          true
+        );
+
+        return;
+
+      }
+
+
+      if (credits <= 0) {
+
+        showMessage(
+          "You have no credits remaining.",
+          true
+        );
+
+        return;
+
+      }
+
+
+      /*
+        FRONTEND DEMO ONLY
+
+        The actual video-processing server
+        will be connected here later.
+
+        Never put private API keys or
+        server secrets inside this file.
+      */
+
+
+      const project = {
+
+        id:
+          Date.now(),
+
+        url:
+          url,
+
+        format:
+          format,
+
+        quality:
+          quality,
+
+        captions:
+          captions,
+
+        status:
+          "Queued",
+
+        createdAt:
+          new Date().toLocaleString()
+
+      };
+
+
+      projects.unshift(project);
+
+      credits--;
+
+      localStorage.setItem(
+        "clipin_projects",
+        JSON.stringify(projects)
+      );
+
+      localStorage.setItem(
+        "clipin_credits",
+        String(credits)
+      );
+
+
+      input.value = "";
+
+      updateDashboard();
+
+      renderProjects();
+
+
+      showMessage(
+        "Project created successfully. Video processing backend is ready to be connected."
+      );
+
+    }
+
+
+    /* =========================================
+       SHOW MESSAGE
+    ========================================== */
+
+    function showMessage(
+      text,
+      error = false
+    ) {
+
+      const message =
+        document.getElementById("message");
+
+      message.textContent = text;
+
+      message.className =
+        error
+          ? "message show error"
+          : "message show";
+
+    }
+
+
+    /* =========================================
+       RENDER PROJECTS
+    ========================================== */
+
+    function renderProjects() {
+
+      const list =
+        document.getElementById("projectList");
+
+
+      if (projects.length === 0) {
+
+        list.innerHTML = `
+
+          <div class="empty-state">
+
+            <div class="empty-icon">
+              ▶
+            </div>
+
+            <strong>
+              No projects yet
+            </strong>
+
+            Create your first project above.
+
+          </div>
+
+        `;
+
+        return;
+
+      }
+
+
+      list.innerHTML =
+        projects
+          .slice(0, 10)
+          .map(function(project) {
+
+            return `
+
+              <div class="project-item">
+
+                <div class="project-left">
+
+                  <div class="project-thumbnail">
+                    ▶
+                  </div>
+
+                  <div class="project-info">
+
+                    <div class="project-name">
+                      ${escapeHtml(project.url)}
+                    </div>
+
+                    <div class="project-meta">
+                      ${project.format}
+                      •
+                      ${project.quality}
+                      •
+                      ${project.createdAt}
+                    </div>
+
+                  </div>
+
+                </div>
+
+                <div class="status">
+                  ${escapeHtml(project.status)}
+                </div>
+
+              </div>
+
+            `;
+
+          })
+          .join("");
+
+    }
+
+
+    /* =========================================
+       ESCAPE HTML
+    ========================================== */
+
+    function escapeHtml(text) {
+
+      return String(text)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+
+    }
+
+
+    /* =========================================
+       NAVIGATION
+    ========================================== */
+
+    function showSection(section) {
+
+      const dashboard =
+        document.getElementById("dashboard");
+
+      const settings =
+        document.getElementById("settings");
+
+
+      if (section === "settings") {
+
+        dashboard.style.display = "none";
+
+        settings.style.display = "block";
+
+      } else {
+
+        dashboard.style.display = "block";
+
+        settings.style.display = "none";
+
+      }
+
+
+      document
+        .querySelectorAll(".nav-button")
+        .forEach(function(button) {
+
+          button.classList.remove("active");
+
+        });
+
+
+      event.currentTarget.classList.add("active");
+
+
+      if (section === "create") {
+
+        document
+          .getElementById("create")
+          .scrollIntoView({
+            behavior: "smooth"
+          });
+
+      }
+
+
+      if (section === "projects") {
+
+        document
+          .getElementById("projects")
+          .scrollIntoView({
+            behavior: "smooth"
+          });
+
+      }
+
+    }
+
+
+    /* =========================================
+       LOGOUT
+    ========================================== */
+
+    function logout() {
+
+      /*
+        Real Supabase logout will replace
+        this function after authentication
+        is connected.
+      */
+
+      localStorage.removeItem(
+        "clipin_demo_user"
+      );
+
+      window.location.href =
+        "index.html";
+
+    }
+
+  </script>
+
+</body>
+</html>
