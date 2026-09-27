@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Clipin — Turn Long Videos Into Short Clips</title>
+
+  <meta
+    name="description"
+    content="Clipin helps creators turn long videos into engaging short-form content."
+  >
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  >
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+  <header class="navbar">
+
+    <a href="#" class="logo">
+      <span class="logo-icon">C</span>
+      <span>Clipin</span>
+    </a>
+
+    <nav class="nav-links">
+      <a href="#features">Features</a>
+      <a href="#how-it-works">How it works</a>
+      <a href="#pricing">Pricing</a>
+    </nav>
+
+    <a href="#start" class="nav-button">
+      Start Creating
+    </a>
+
+  </header>
+
+
+  <!-- HERO -->
+  <main>
+
+    <section class="hero" id="start">
+
+      <div class="glow glow-1"></div>
+      <div class="glow glow-2"></div>
+
+      <div class="hero-content">
+
+        <div class="badge">
+          <span></span>
+          AI Video Clipping for Creators
+        </div>
+
+        <h1>
+          Turn long videos into
+          <span>short-form content.</span>
+        </h1>
+
+        <p>
+          Clipin helps you transform long videos into engaging
+          Shorts, Reels and social media clips.
+        </p>
+
+        <div class="hero-buttons">
+
+          <a href="#demo" class="btn btn-primary">
+            Try Clipin
+            <span>→</span>
+          </a>
+
+          <a href="#how-it-works" class="btn btn-secondary">
+            See How It Works
+          </a>
+
+        </div>
+
+        <div class="trust">
+
+          <div class="mini-users">
+            <span>YT</span>
+            <span>IG</span>
+            <span>CR</span>
+            <span>+</span>
+          </div>
+
+          <p>
+            Built for creators, podcasters & businesses
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <!-- DEMO CARD -->
+      <div class="demo-card" id="demo">
+
+        <div class="window-header">
+
+          <div class="window-dots">
+            <i></i>
+            <i></i>
+            <i></i>
+          </div>
+
+          <span>New Project</span>
+
+          <small>
+            ● Ready
+          </small>
+
+        </div>
+
+
+        <div class="video-box">
+
+          <div class="play-button">
+            ▶
+          </div>
+
+          <span>LONG VIDEO</span>
+
+          <strong>
+            01:24:36
+          </strong>
+
+        </div>
+
+
+        <div class="video-controls">
+
+          <label>
+            Paste your authorized video link
+          </label>
+
+          <div class="input-box">
+
+            <input
+              type="text"
+              id="videoLink"
+              placeholder="https://your-video-link.com/..."
+            >
+
+            <button onclick="processDemo()">
+              Process
+            </button>
+
+          </div>
+
+
+          <div class="options">
+
+            <div>
+              <small>Format</small>
+              <strong>9:16</strong>
+            </div>
+
+            <div>
+              <small>Quality</small>
+              <strong>1080p</strong>
+            </div>
+
+            <div>
+              <small>Captions</small>
+              <strong>ON</strong>
+            </div>
+
+          </div>
+
+        </div>
+
+        <p class="demo-message" id="demoMessage">
+          Demo interface — real processing will be connected later.
+        </p>
+
+      </div>
+
+    </section>
+
+
+    <!-- STATS -->
+
+    <section class="stats">
+
+      <div>
+        <strong>9:16</strong>
+        <span>Shorts & Reels</span>
+      </div>
+
+      <div>
+        <strong>1080p</strong>
+        <span>High Quality</span>
+      </div>
+
+      <div>
+        <strong>AI</strong>
+        <span>Smart Clipping</span>
+      </div>
+
+      <div>
+        <strong>₹</strong>
+        <span>Affordable Plans</span>
+      </div>
+
+    </section>
+
+
+    <!-- FEATURES -->
+
+    <section class="section" id="features">
+
+      <div class="section-heading">
+
+        <span class="eyebrow">
+          WHY CLIPIN
+        </span>
+
+        <h2>
+          Everything you need to repurpose content.
+        </h2>
+
+        <p>
+          Turn one long video into multiple pieces of
+          short-form content.
+        </p>
+
+      </div>
+
+
+      <div class="feature-grid">
+
+        <article class="feature-card">
+
+          <div class="feature-icon">
+            ✦
+          </div>
+
+          <h3>
+            Smart Clipping
+          </h3>
+
+          <p>
+            Find useful moments from your long videos
+            and turn them into short clips.
+          </p>
+
+        </article>
+
+
+        <article class="feature-card">
+
+          <div class="feature-icon">
+            ↗
+          </div>
+
+          <h3>
+            Multiple Formats
+          </h3>
+
+          <p>
+            Create content in 9:16, 1:1 and 16:9 formats
+            for different platforms.
+          </p>
+
+        </article>
+
+
+        <article class="feature-card">
+
+          <div class="feature-icon">
+            Aa
+          </div>
+
+          <h3>
+            Auto Captions
+          </h3>
+
+          <p>
+            Add captions to your clips and make them
+            easier to watch.
+          </p>
+
+        </article>
+
+
+        <article class="feature-card">
+
+          <div class="feature-icon">
+            HD
+          </div>
+
+          <h3>
+            High Quality
+          </h3>
+
+          <p>
+            Export your clips in high quality for
+            social media platforms.
+          </p>
+
+        </article>
+
+      </div>
+
+    </section>
+
+
+    <!-- HOW IT WORKS -->
+
+    <section class="section workflow" id="how-it-works">
+
+      <div class="section-heading">
+
+        <span class="eyebrow">
+          HOW IT WORKS
+        </span>
+
+        <h2>
+          From long video to ready-to-post clip.
+        </h2>
+
+      </div>
+
+
+      <div class="steps">
+
+        <div class="step">
+
+          <span>01</span>
+
+          <h3>
+            Add Your Video
+          </h3>
+
+          <p>
+            Paste a link to a video you own or are
+            authorized to process.
+          </p>
+
+        </div>
+
+
+        <div class="step">
+
+          <span>02</span>
+
+          <h3>
+            Choose Your Output
+          </h3>
+
+          <p>
+            Select the format, quality and caption
+            preferences.
+          </p>
+
+        </div>
+
+
+        <div class="step">
+
+          <span>03</span>
+
+          <h3>
+            Generate Clips
+          </h3>
+
+          <p>
+            Clipin prepares short-form versions
+            ready for review and export.
+          </p>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- PRICING -->
+
+    <section class="section pricing" id="pricing">
+
+      <div class="section-heading">
+
+        <span class="eyebrow">
+          SIMPLE PRICING
+        </span>
+
+        <h2>
+          Create more. Pay less.
+        </h2>
+
+        <p>
+          Affordable plans designed for creators.
+        </p>
+
+      </div>
+
+
+      <div class="pricing-grid">
+
+
+        <!-- FREE -->
+
+        <article class="price-card">
+
+          <span>
+            FREE
+          </span>
+
+          <h3>
+            ₹0
+          </h3>
+
+          <p>
+            Try Clipin
+          </p>
+
+          <ul>
+            <li>20 processing minutes</li>
+            <li>3 exports</li>
+            <li>Basic captions</li>
+            <li>720p export</li>
+          </ul>
+
+          <a href="#start">
+            Get Started
+          </a>
+
+        </article>
+
+
+        <!-- CREATOR -->
+
+        <article class="price-card featured">
+
+          <div class="popular">
+            MOST POPULAR
+          </div>
+
+          <span>
+            CREATOR
+          </span>
+
+          <h3>
+            ₹199
+            <small>/month</small>
+          </h3>
+
+          <p>
+            For regular creators
+          </p>
+
+          <ul>
+            <li>400 processing minutes</li>
+            <li>1080p exports</li>
+            <li>No watermark</li>
+            <li>Auto captions</li>
+            <li>Multiple formats</li>
+          </ul>
+
+          <a href="#start">
+            Choose Creator
+          </a>
+
+        </article>
+
+
+        <!-- PRO -->
+
+        <article class="price-card">
+
+          <span>
+            PRO
+          </span>
+
+          <h3>
+            ₹399
+            <small>/month</small>
+          </h3>
+
+          <p>
+            For heavy creators
+          </p>
+
+          <ul>
+            <li>1,000 processing minutes</li>
+            <li>AI clip suggestions</li>
+            <li>1080p exports</li>
+            <li>Auto captions</li>
+            <li>Priority processing</li>
+          </ul>
+
+          <a href="#start">
+            Choose Pro
+          </a>
+
+        </article>
+
+      </div>
+
+    </section>
+
+
+    <!-- FINAL CTA -->
+
+    <section class="final-cta">
+
+      <div>
+
+        <span class="eyebrow">
+          READY?
+        </span>
+
+        <h2>
+          Your next short starts with Clipin.
+        </h2>
+
+      </div>
+
+      <a href="#start" class="btn btn-primary">
+        Start Creating
+        <span>→</span>
+      </a>
+
+    </section>
+
+  </main>
+
+
+  <!-- FOOTER -->
+
+  <footer>
+
+    <a href="#" class="logo">
+      <span class="logo-icon">
+        C
+      </span>
+
+      <span>
+        Clipin
+      </span>
+    </a>
+
+    <p>
+      © 2026 Clipin. Built for authorized video content.
+    </p>
+
+  </footer>
+
+
+  <script src="script.js"></script>
+
+</body>
+</html>
